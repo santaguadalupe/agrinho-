@@ -1,52 +1,64 @@
 function setup() {
   createCanvas(400, 400);
 }
-let farmer;
-let apples = [];
-
-function setup() {
-  createCanvas(600, 400);
-  farmer = createVector(width / 2, height - 40);
-  for (let i = 0; i < 5; i++) {
-    apples.push(createApple());
-  }
-}
+let Xjogador1 = 0;
+let Xjogador2 = 0;
 
 function draw() {
-  background(100, 200, 100); // cor de grama
-  fill(139, 69, 19);
-  rect(farmer.x, farmer.y, 40, 40); // o fazendeiro
+  AtivaJogo();
+  desenhaJogadores();
+  desenhaLinhaDeChegada();
 
-  for (let i = 0; i < apples.length; i++) {
-    let a = apples[i];
-    fill(255, 0, 0);
-    ellipse(a.x, a.y, 20, 20);
-    a.y += 2;
+if (Xjogador1 > 350){
+  fill("blue");
+  textSize(20);
+  text("jogador 1 venceu!", 80,200);
+  noLoop();
+}
+ if (Xjogador2 > 350){
+   fill("yellow");
+   textSize(20);
+   text("jogador 2 venceu!", 80,200);
+   noLoop();
+ }
+   
+}
+ function keyReleased(){
+ if (key === 'a') {
+   Xjogador1 += random(20);
+ }
+ if (key == 's') {
+ Xjogador2 += random(20);
 
-    // se colidir com o fazendeiro
-    if (dist(farmer.x + 20, farmer.y + 20, a.x, a.y) < 30) {
-      apples[i] = createApple();
-    }
-
-    // se cair fora da tela, reseta
-    if (a.y > height) {
-      apples[i] = createApple();
-    }
   }
-
-  handleInput();
+ }
+function AtivaJogo(){
+ if(focused==true){
+ background("#4CAF50");
+ }
+   else{
+     background("#6FA82C")
+   }
 }
+   
 
-function handleInput() {
-  if (keyIsDown(LEFT_ARROW)) farmer.x -= 5;
-  if (keyIsDown(RIGHT_ARROW)) farmer.x += 5;
-  farmer.x = constrain(farmer.x, 0, width - 40);
-}
+function desenhaJogadores(){
+textSize(50);
+  text("🚛",Xjogador1,100);
+  text("🚜",Xjogador2, 300);
+} 
+  function desenhaLinhaDeChegada(){
+    fill("red");
+  rect(350,0,10,400);
+    fill("#026B06");
+    for(let yAtual=0; yAtual< 400; yAtual += 20){
+      rect(350,yAtual,10,10);
+    }
+ }    
+  
 
-function createApple() {
-  return createVector(random(20, width - 20), -random(100, 500));
-}
 
-function draw() {
-  background(220);
-}
+
+
+
+
